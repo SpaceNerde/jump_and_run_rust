@@ -20,8 +20,8 @@ fn main() {
             }),
             ..default()
         }))
-        .add_startup_systems(setup_camera)
-        .add_startup_systems(setup_player)
+        .add_systems(Startup,setup_camera)
+        .add_systems(Startup,setup_player)
         .run();
 }
 
