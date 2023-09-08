@@ -95,3 +95,23 @@ fn player_movement(
         player.translation.x += PLAYER_MOVE_SPEED * time.delta_seconds();
     }
 }
+
+fn change_player_animation(
+    mut player: Query<(&mut Handle<TextureAtlas>, &mut SpriteAnimation, &mut TextureAtlasSprite), With<Player>>,
+    input: Res<Input<KeyCode>>,
+    mut texture_atlas: ResMut<Assets<TextureAtlas>>,
+    asset_server: Res<AssetServer>,
+) {
+    let (mut atlas, mut animation, mut sprite) = player.single_mut();
+
+
+    // on key press change sprite animation
+    if input.any_just_pressed([KeyCode::A, KeyCode::Left, KeyCode::D, KeyCode::Right]) {
+        // Walk Animation
+    }
+
+    if input.any_just_pressed([KeyCode::A, KeyCode::Left, KeyCode::D, KeyCode::Right])
+        && !input.any_pressed([KeyCode::A, KeyCode::Left, KeyCode::D, KeyCode::Right]) {
+        // Idle Animation
+    }
+}
