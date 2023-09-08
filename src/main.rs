@@ -1,3 +1,6 @@
+// Sprites made by Penzilla ("https://penzilla.itch.io/hooded-protagonist")
+// Powered by Bevy Game Engine
+
 use bevy::prelude::*;
 
 pub const SCREEN_WIDTH: f32 = 800.0;
