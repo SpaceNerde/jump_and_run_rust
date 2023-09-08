@@ -6,6 +6,8 @@ use bevy::prelude::*;
 pub const SCREEN_WIDTH: f32 = 800.0;
 pub const SCREEN_HEIGHT: f32 = 800.0;
 
+pub const PLAYER_MOVE_SPEED: f32 = 100.;
+
 #[derive(Component)]
 struct Player;
 
@@ -31,7 +33,8 @@ fn main() {
         }))
         .add_systems(Startup, setup_camera)
         .add_systems(Startup, setup_player)
-        .add_systems(Update, animate_sprites)
+        .add_systems(FixedUpdate, animate_sprites)
+        .add_systems(FixedUpdate, player_movement)
         .run();
 }
 
@@ -77,5 +80,18 @@ fn animate_sprites(
             if sprite.index >= animation.len { sprite.index %= animation.len; }
             frame_time.0 -= animation.frame_time * frames as f32;
         }
+    }
+}
+
+fn player_movement(
+    mut player: Query<&mut Transform, With<Player>>,
+    time: Res<Time>,
+    input: Res<Input<KeyCode>>,
+) {
+    let mut player = player.single_mut();
+    if input.any_pressed([KeyCode::A, KeyCode::Left]) {
+        player.translation.x -= PLAYER_MOVE_SPEED * time.delta_seconds();
+    } else if input.any_pressed([KeyCode::D, KeyCode::Right]) {
+        player.translation.x += PLAYER_MOVE_SPEED * time.delta_seconds();
     }
 }
